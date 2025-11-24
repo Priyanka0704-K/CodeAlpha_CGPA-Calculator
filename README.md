@@ -1,1 +1,1 @@
-# CodeAlpha_CGPA-Calculator
+# CodeAlpha_Project
