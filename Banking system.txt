@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include <ctime>
+using namespace std;
+
+class Transaction {
+public:
+    string type;
+    double amount;
+    string getTime() {
+        time_t now = time(0);
+        return string(ctime(&now));
+    }
+    Transaction(string t, double a) : type(t), amount(a) {}
+    void show() { cout << getTime() << " - " << type << ": $" << amount << endl; }
+};
+
+class Account {
+public:
+    double balance = 0;
+    vector<Transaction> history;
+
+    void deposit(double amt) {
+        balance += amt;
+        history.push_back(Transaction("Deposit", amt));
+    }
+
+    void withdraw(double amt) {
+        if (amt <= balance) {
+            balance -= amt;
+            history.push_back(Transaction("Withdraw", amt));
+        } else cout << "Insufficient funds\n";
+    }
+
+    void show() {
+        cout << "Balance: $" << balance << "\nTransactions:\n";
+        for (auto &t : history) t.show();
+    }
+};
+
+int main() {
+    Account acc;
+    acc.deposit(500);
+    acc.withdraw(200);
+    acc.deposit(300);
+    acc.show();
+    return 0;
+}
